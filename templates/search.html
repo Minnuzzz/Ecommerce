@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block metadescription  %}
+         We have variety of products You can explore the world of Global supplements with a single click
+{% endblock %}
+{% block title %}
+     Search
+{% endblock %}
+{% block content %}
+<div>
+    <p class="text-center my-search-text">You Have Searched for:<b>"{{query}}"</b></p>
+</div>
+<div class="container-fluid">
+    <div class="row">
+        {% for product in products %}
+            <div class="my-bottom-margin col-12 col-sm-6 col-md-4 col-lg-4">
+                <div class="card text-center" style="width: 10rem;">
+                    <a href="{{product.get_url}}">
+                        <img class="card-img-top my_image" src="{{product.image.url}}" alt="{{product.name}}">
+                    </a>
+                    <div class="card-body">
+                        <h4>{{product.name}}</h4>
+                        <p>&#8377;{{product.price}}</p>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+        <div class="row mx-auto">
+            <p class="text-center my-search-text">0 Result Found</p>
+        </div>
+        {% endfor %}
+ {% endblock %}

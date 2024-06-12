@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block metadescription  %}
+    {% if category %}
+        {{category.description|truncatewords:155}}
+    {% else %}
+         Welcome to Global Supplements where you can buy
+         high quality protein  in a lower rate
+    {% endif %}
+{% endblock %}
+
+{% block title %}
+
+    {% if category %}
+        {{category.name}}-Global Supplements
+    {% else %}
+         see our new product updates-Global Supplements
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+  {% if category %}
+      <div class="container-fluid">
+          <div class="row my_row_class">
+              <div class="mx-auto">
+              <p> <a href="{% url 'shop:allprodcat' %}"> Our Products</a> </p>
+              </div>
+          </div>
+      </div>
+  {% endif %}
+
+<div class="mx-auto">
+    {% if category %}
+        <img  src="{{category.image.url}}" alt="{{category.name}}" style="width:100%; height:300px;">
+</div>
+<br>
+
+<div>
+    <h1>{{category.name}}</h1>
+    <p> {{category.description}}</p>
+</div>
+    {% else  %}
+     <div>
+         <img class="my_image_banner my_image_padding " src="{% static 'img\banner.png' %}" alt="Our product" width="100%;" height="300px;">
+     </div>
+<br>
+<div>
+    <h1 class="text-center" style=" font-family: Times New Roman, Times, serif;"><b> OUR PRODUCT COLLECTIONS</b></h1>
+    <p class="text-justify" style=" font-family: Times New Roman, Times, serif; font-size:20px;">The word Lorem Ipsum is derived from the Latin word which means “pain itself”. It is a kind of a text filler tool that is used by the webmaster on the website.
+Basically, this tool is used to create dummy content on the website when it’s new.
+It helps the designer plan where the content will sit. It helps in creating drafts of the content on the pages of the website. It originates from the Latin text but is seen as gibberish.
+Sometimes, the reader gets distracted while creating or working on the website. That’s why this language is important.
+This tool makes the work easier for the webmaster. When using Lorem Ipsum for creating dummy content for your newly created website, you can select the text formats you want from the tool. Like, words, sentences, or paragraphs</p>
+</div>
+    {% endif %}
+<div class="container">
+    <div class="row">
+        {% for product in products.object_list %}
+            <div class="my-bottom-margin col-12 col-sm-6 col-md-4 col-lg-4">
+                <div class="card text-center" >
+                    <a href="{{product.get_url}}">
+                        <img class="card-img-top my_image" src="{{product.image.url}}" alt="{{product.name}}" style="width:120px; height:100px;">
+                    </a>
+                    <div class="card-body">
+                        <h4>{{product.name}}</h4>
+                        <p>&#8377;{{product.price}}</p>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    <div class="mx-auto">
+        {% if products.paginator.num_pages > 1 %}
+
+        <hr>
+
+        <div class="text-center">
+            {% for pg in products.paginator.page_range %}
+            <a href="?page={{pg}}" class="btn btn-light btn-sm {% if products.number == pg %} active {% endif %}">{{pg}}</a>
+            {% endfor %}
+
+        </div>
+        {% endif %}
+
+    </div>
+    <br>
+</div>
+
+</div>
+{% endblock %}
